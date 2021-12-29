@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import "../Login.css"
 import StyleReader from "../../../../../utils/StyleReader";
+import {connect} from "react-redux";
 
 class Password extends Component {
     state = {
@@ -19,7 +20,7 @@ class Password extends Component {
         }
 
         const styleReader = new StyleReader(componentStyle);
-        const label = this.props.children || "Password";
+        const label = componentStyle.text || "Password";
 
         return (
             <form className={styleReader.userClassName + "login__group"}>
@@ -41,4 +42,10 @@ class Password extends Component {
     }
 }
 
-export default Password;
+const mapStateToProps = (state) => {
+    return {
+        componentsState: state.libraryState
+    }
+}
+
+export default connect(mapStateToProps)(Password);

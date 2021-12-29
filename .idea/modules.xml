@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../GBCProject/.idea/GBCProject.iml" filepath="$PROJECT_DIR$/../GBCProject/.idea/GBCProject.iml" />
       <module fileurl="file://$USER_HOME$/cities/.idea/cities.iml" filepath="$USER_HOME$/cities/.idea/cities.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../pythonProjects/PycharmProjects/pythonProject/diary_site/.idea/diary_site.iml" filepath="$PROJECT_DIR$/../../pythonProjects/PycharmProjects/pythonProject/diary_site/.idea/diary_site.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/gbc.iml" filepath="$PROJECT_DIR$/.idea/gbc.iml" />

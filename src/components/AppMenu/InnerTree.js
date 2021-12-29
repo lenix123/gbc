@@ -18,7 +18,7 @@ const fileIcon = <FontAwesomeIcon className="tree-element__icon tree-element__ic
 class InnerTree extends Component {
 
     render () {
-        const { openDir, callComponent, userComponentName } = this.props;
+        const { openDir } = this.props;
         let indexDir;
 
         // нам передали название папки, которую нужно отобразить,
@@ -34,17 +34,13 @@ class InnerTree extends Component {
         // выводим все подпапки в нашей папке
         const dirBtn = currentDir.dirs.map((dirName) => (
             <DirBtn key={dirName}
-                    dirName={dirName}
-                    callComponent={callComponent}
-                    userComponentName={userComponentName}/>
+                    dirName={dirName}/>
         ));
 
         // выводим все файлы в нашей папке
         const fileBtn = currentDir.files.map((file) => (
             <FileBtn key={file}
-                     file={file}
-                     callComponent={callComponent}
-                     userComponentName={userComponentName}/>
+                     file={file}/>
         ));
 
         return (

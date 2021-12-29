@@ -5,6 +5,7 @@ import Data from "../Data/Data";
 import CardInfo from "card-info";
 import * as nameLogos from "./BanksHub";
 import * as nameBrands from "./BrandsHub";
+import {connect} from "react-redux";
 
 class BankCard extends Component {
     state = {
@@ -21,7 +22,7 @@ class BankCard extends Component {
         const {componentsState} = this.props;
         const componentStyle = componentsState && componentsState["BankCard"];
         const styleReader = new StyleReader(componentStyle);
-        const defaultText = this.props.children || 'Lenix Bank'
+        const defaultText = componentStyle.text || 'Lenix Bank'
         let CardStyle = styleReader.style;
         CardStyle['background'] = this.state.background || CardStyle['background'];
         CardStyle['color'] = this.state.textColor || CardStyle['color'];
@@ -121,4 +122,10 @@ class BankCard extends Component {
     }
 }
 
-export default BankCard;
+const mapStateToProps = (state) => {
+    return {
+        componentsState: state.libraryState
+    }
+}
+
+export default connect(mapStateToProps)(BankCard);

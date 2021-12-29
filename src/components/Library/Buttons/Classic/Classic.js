@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import "./Classic.css"
 import StyleReader from "../../../../utils/StyleReader";
+import {connect} from "react-redux";
 
 class Classic extends Component {
     render() {
         const {componentsState} = this.props;
         const componentStyle = componentsState && componentsState["Classic"];
-        const text = this.props.children || "Scooby Doo";
+        const text = componentStyle.text || "Scooby Doo";
         const styleReader = new StyleReader(componentStyle);
 
         return (
@@ -23,4 +24,10 @@ class Classic extends Component {
     }
 }
 
-export default Classic;
+const mapStateToProps = (state) => {
+    return {
+        componentsState: state.libraryState
+    }
+}
+
+export default connect(mapStateToProps)(Classic);

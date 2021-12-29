@@ -2,13 +2,14 @@ import React, {Component} from "react";
 import StyleReader from "../../../../utils/StyleReader";
 import styled from "styled-components";
 import "./Outline.css"
+import {connect} from "react-redux";
 
 
 class Outline extends Component {
     render() {
         const {componentsState} = this.props;
         const componentStyle = componentsState && componentsState["Outline"];
-        const text = this.props.children || "Scooby Doo";
+        const text = componentStyle.text || "Scooby Doo";
         const styleReader = new StyleReader(componentStyle);
 
         const mainColor = componentStyle['bc'] || "#0071f0";
@@ -36,4 +37,10 @@ class Outline extends Component {
     }
 }
 
-export default Outline;
+const mapStateToProps = (state) => {
+    return {
+        componentsState: state.libraryState
+    }
+}
+
+export default connect(mapStateToProps)(Outline);

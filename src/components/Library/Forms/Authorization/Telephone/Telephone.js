@@ -4,6 +4,7 @@ import StyleReader from "../../../../../utils/StyleReader";
 import {phoneinput} from "./phoneinput";
 import {phoneKeyDown} from "./phoneinput";
 import {phonePaste} from "./phoneinput";
+import {connect} from "react-redux";
 
 class Telephone extends Component {
     state = {
@@ -22,7 +23,7 @@ class Telephone extends Component {
         }
 
         const styleReader = new StyleReader(componentStyle);
-        const label = this.props.children || "Telephone";
+        const label = componentStyle.text || "Telephone";
 
         return (
             <form className={styleReader.userClassName + "login__group"}>
@@ -36,13 +37,6 @@ class Telephone extends Component {
                        onKeyDown={this.onPhoneKeyDown}
                        value={this.state.value}
                        maxLength={18} />
-                {/*<InputMask mask="+7 (999) 999-99-99"*/}
-                {/*           type="tel"*/}
-                {/*           className={"login__input"}*/}
-                {/*           style={styleReader.style}*/}
-                {/*           placeholder=""*/}
-                {/*           onChange={this.handleChange}*/}
-                {/*           value={this.state.value}/>*/}
                 <label className={`login__label login__label_${condition}`}>{label}</label>
             </form>
         )
@@ -70,4 +64,10 @@ class Telephone extends Component {
     }
 }
 
-export default Telephone;
+const mapStateToProps = (state) => {
+    return {
+        componentsState: state.libraryState
+    }
+}
+
+export default connect(mapStateToProps)(Telephone);

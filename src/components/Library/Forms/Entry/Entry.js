@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import "./Entry.css"
 import StyleReader from "../../../../utils/StyleReader";
 import * as components from "../../../../utils/Hub";
+import {connect} from "react-redux";
 
 class Entry extends Component {
     render() {
@@ -12,7 +13,7 @@ class Entry extends Component {
         const Password = components["Password"];
 
         const styleReader = new StyleReader(componentStyle);
-        const entryName = this.props.children || "Sign in";
+        const entryName = componentStyle.text || "Sign in";
 
         const buttonName = componentStyle.btn || "Classic";
         const buttonText = componentsState[buttonName].text;
@@ -43,4 +44,10 @@ class Entry extends Component {
     }
 }
 
-export default Entry;
+const mapStateToProps = (state) => {
+    return {
+        componentsState: state.libraryState
+    }
+}
+
+export default connect(mapStateToProps)(Entry);

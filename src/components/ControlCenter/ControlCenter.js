@@ -14,38 +14,30 @@ class ControlCenter extends Component {
 
 
     render() {
-        const {getStyles, resetStyles, componentName, componentsState} =  this.props;
-
-        // componentStyle содержит стиль активного компонента
-        const componentStyle = componentsState[componentName];
         let currentMenu;
 
         switch ( this.currentTabName() ) {
             case ('Style'):
 
                 // передаем в качестве пропсов колбэки и стиль компонента
-                currentMenu = <StyleMenu getStyles={getStyles}
-                                         resetStyles={resetStyles}
-                                         componentStyle={componentStyle}/>
+                currentMenu = <StyleMenu/>
                 break;
             case ('Export'): {
 
                 // передаем в качестве пропсов состояние стилей компонентов и
                 // название текущего компонента
-                currentMenu = <ExportMenu componentName={componentName}
-                                          componentsState={componentsState}/>
+                currentMenu = <ExportMenu/>
                 break;
             }
             case ('Info'):
-                currentMenu = <InfoMenu />
+                currentMenu = <InfoMenu/>
         }
 
         // рендерим панель вкладок (Tabs) и выбранное на панели меню
         return(
             <div className="control-center">
                 <Tabs currentTabName={this.currentTabName()}
-                      switchTab={this.switchTab}
-                      componentName={componentName}/>
+                      switchTab={this.switchTab}/>
                 {currentMenu}
             </div>
         )

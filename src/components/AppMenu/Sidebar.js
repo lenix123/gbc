@@ -13,9 +13,7 @@ class Sidebar extends Component {
                         <p className="sidebar__title">LIBRARY</p>
 
                         <div className="sidebar__wrapper">
-                            <DirBtn dirName={"Library"}
-                                    callComponent={this.props.callComponent}
-                                    userComponentName={this.props.userComponentName}/>
+                            <DirBtn dirName={"Library"}/>
                         </div>
                     </div>
                 </div>

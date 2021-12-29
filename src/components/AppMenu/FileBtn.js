@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import { fileIcon } from './InnerTree'
+import {connect} from "react-redux";
+import {setComponentName} from "../../store/currentComponent/actions";
 
 // FileBtn – компонент-кнопка, отображающая название файла на боковой панели
 class FileBtn extends Component {
@@ -10,9 +12,9 @@ class FileBtn extends Component {
     // метод, вызывающийся перед рендером компонента
     // метод позволяет отследить изменение фокуса на компоненте
     static getDerivedStateFromProps(props, state) {
-        const { userComponentName, file } = props;
+        const { componentName, file } = props;
         const fileName = file.slice(0, -3);
-        const isEqual = userComponentName === fileName;
+        const isEqual = componentName === fileName;
 
         // если кнопка в фокусе,
         // но ее название не совпадает с названием прожатой в данный момент кнопки,
@@ -45,9 +47,9 @@ class FileBtn extends Component {
 
     // метод вызывает колбэк, отображающий компонент или прячущий его
     displayComponent = () => {
-        const { callComponent, file } = this.props;
+        const { setComponentName, file } = this.props;
         const fileName = file.slice(0, -3);
-        callComponent(fileName)
+        setComponentName(fileName);
 
         // присвоить компоненту фокус, если он отображается, и наоборот
         this.setState({
@@ -67,4 +69,14 @@ class FileBtn extends Component {
     }
 }
 
-export default FileBtn;
+const mapStateToProps = (state) => {
+    return {
+        componentName: state.currentComponent.componentName
+    }
+}
+
+const mapDispatchToProps = {
+    setComponentName
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FileBtn);

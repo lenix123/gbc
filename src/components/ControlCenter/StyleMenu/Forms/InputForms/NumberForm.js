@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {setComponentState} from "../../../../../store/libraryState/actions";
+import {connect} from "react-redux";
 
 class NumberForm extends Component {
     state = {
@@ -7,7 +9,8 @@ class NumberForm extends Component {
 
     // метод жизненного цикла, позволяющий синхронизировать состояние формы со стилем компонента
     static getDerivedStateFromProps(props, state) {
-        const {componentStyle, styleType} = props;
+        const {componentsState, componentName, styleType} = props;
+        const componentStyle = componentsState[componentName];
 
         // синхронизация значения формы и стиля компонента
         if (componentStyle[styleType] !== state.value) {
@@ -46,9 +49,25 @@ class NumberForm extends Component {
 
     // метод передает изменения с помощью функции-колбэка
     handleChange = (event) => {
-        const {getStyles, styleType} = this.props;
-        getStyles(styleType, event.target.value);
+        const {setComponentState, componentName, styleType} = this.props;
+        const value = event.target.value;
+        setComponentState(componentName, styleType, value);
+
+        this.setState({
+            value: value,
+        });
     }
 }
 
-export default NumberForm;
+const mapStateToProps = (state) => {
+    return {
+        componentName: state.currentComponent.componentName,
+        componentsState: state.libraryState
+    }
+}
+
+const mapDispatchToProps = {
+    setComponentState
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NumberForm);

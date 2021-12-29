@@ -2,6 +2,7 @@ import React from "react";
 import DisplayingText from "./DisplayingText";
 import CopyButton from "./CopyButton";
 import textBuilder from "../../../utils/textBuilder";
+import {connect} from "react-redux";
 
 // компонент Instruction отвечает за вывод одного блока инструкции,
 // то есть теста инструкции и кнопки "копировать"
@@ -47,4 +48,11 @@ class Instruction extends React.Component {
     }
 }
 
-export default Instruction;
+const mapStateToProps = (state) => {
+    return {
+        componentName: state.currentComponent.componentName,
+        componentsState: state.libraryState
+    }
+}
+
+export default connect(mapStateToProps)(Instruction);

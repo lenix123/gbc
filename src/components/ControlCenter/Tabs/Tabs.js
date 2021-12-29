@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../../../assets/css/ControlCenter/Tabs.scss';
 import TabItem from "./TabItem";
 import ThemeContext from "../../ThemeControl/ThemeContext";
+import {connect} from "react-redux";
 
 // Tabs представляет из себя панель вкладок
 class Tabs extends Component {
@@ -38,4 +39,10 @@ class Tabs extends Component {
     static contextType = ThemeContext;
 }
 
-export default Tabs;
+const mapStateToProps = (state) => {
+    return {
+        componentName: state.currentComponent.componentName
+    }
+}
+
+export default connect(mapStateToProps)(Tabs);

@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import '../../../assets/css/ControlCenter/InputForms.scss';
 import FormTemplate from './Forms/FormTemplate';
 import ResetBtn from "./ResetBtn";
+import {connect} from "react-redux";
 
 // StyleMenu отвечает за меню стилевых форм
 class StyleMenu extends Component {
     render () {
-        const {getStyles, resetStyles, componentStyle} = this.props;
+        const {componentsState, componentName} = this.props;
+        const componentStyle = componentsState[componentName];
         let formsList = [];
 
         // проходится по каждому свойству объекта стилей компонента,
@@ -14,8 +16,6 @@ class StyleMenu extends Component {
         for (let styleType in componentStyle) {
             if ( componentStyle.hasOwnProperty(styleType) ) {
                 formsList.push(<FormTemplate styleType={styleType}
-                                             getStyles={getStyles}
-                                             componentStyle={componentStyle}
                                              key={styleType}/>)
             }
         }
@@ -26,10 +26,17 @@ class StyleMenu extends Component {
                 <div className="control-menu__inner">
                     {formsList}
                 </div>
-                <ResetBtn resetStyles={resetStyles}/>
+                <ResetBtn/>
             </div>
         )
     }
 }
 
-export default StyleMenu;
+const mapStateToProps = (state) => {
+    return {
+        componentName: state.currentComponent.componentName,
+        componentsState: state.libraryState
+    }
+}
+
+export default connect(mapStateToProps)(StyleMenu);

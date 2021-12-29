@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {setComponentState} from "../../../../../store/libraryState/actions";
+import {connect} from "react-redux";
 
 // форма - выпадающий список
 class DropdownForm extends Component {
@@ -10,7 +12,8 @@ class DropdownForm extends Component {
     // метод жизненного цикла, позволяющий сбросить значение формы,
     // а также синхронизировать состояние формы со стилем компонента
     static getDerivedStateFromProps(props, state) {
-        const {componentStyle, styleType} = props;
+        const {componentsState, componentName, styleType} = props;
+        const componentStyle = componentsState[componentName];
 
         // если стили были сброшены вручную (resetStyles), то форма примет значения по умолчанию
         if (componentStyle[styleType] === '' && state.value !== 'Regular') {
@@ -48,9 +51,24 @@ class DropdownForm extends Component {
 
     // метод передает изменения с помощью функции-колбэка
     handleChange = (event) => {
-        const {getStyles, styleType} = this.props;
-        getStyles(styleType, event.target.value);
+        const {setComponentState, componentName, styleType} = this.props;
+        setComponentState(componentName, styleType, event.target.value);
+
+        this.setState({
+            value: event.target.value
+        })
     }
 }
 
-export default DropdownForm;
+const mapStateToProps = (state) => {
+    return {
+        componentName: state.currentComponent.componentName,
+        componentsState: state.libraryState
+    }
+}
+
+const mapDispatchToProps = {
+    setComponentState
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DropdownForm);

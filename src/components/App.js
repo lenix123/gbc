@@ -4,11 +4,15 @@ import Sidebar from "./AppMenu/Sidebar"
 import Header from "./AppMenu/Header";
 import ThemeContext from "./ThemeControl/ThemeContext";
 import Workspace from "./Workspace";
+import {Provider} from "react-redux";
+import {createStore} from "redux";
+import rootReducer from "../store/reducers";
 
+
+const store = createStore(rootReducer);
 // Компонент App несет в себе функцию отображения всего приложения в целом
 class App extends Component {
     state = {
-        userComponentName: "",
         theme: 'light',
     }
 
@@ -16,34 +20,18 @@ class App extends Component {
         return (
             // Provider позволяет дочерним компонентам подписаться на изменения UI-темы,
             // передавая в качестве пропсов значение темы (theme) и колбэк toggleTheme
-            <ThemeContext.Provider value={ { theme: this.state.theme, toggleTheme: this.toggleTheme } }>
-                <main className={`app app_${this.state.theme}`}>
-                    <section className="app__menu">
-                        <Header />
-                        <Sidebar callComponent={this.callComponent}
-                                 userComponentName={this.state.userComponentName}/>
-                    </section>
-                    <Workspace userComponentName={this.state.userComponentName}/>
-                </main>
-            </ThemeContext.Provider>
+            <Provider store={store}>
+                <ThemeContext.Provider value={ { theme: this.state.theme, toggleTheme: this.toggleTheme } }>
+                    <main className={`app app_${this.state.theme}`}>
+                        <section className="app__menu">
+                            <Header />
+                            <Sidebar />
+                        </section>
+                        <Workspace />
+                    </main>
+                </ThemeContext.Provider>
+            </Provider>
         );
-    }
-
-    // функция callComponent отвечает за отображение компонента библиотеки
-    callComponent = (name) => {
-        // если пользователь вызывает компонент, который уже отображается,
-        // значит этот компанент больше не нужно отображать
-        if (name === this.state.userComponentName) {
-            this.setState({
-                userComponentName: "",
-            })
-        } else {
-            // если пользователь вызывает новый компонент из библиотеки,
-            // то его нужно отобразить
-            this.setState({
-                userComponentName: name,
-            })
-        }
     }
 
     // функция toggleTheme устанавливает тему оформления приложения

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import '../../../assets/css/ControlCenter/ResetBtn.scss'
 import { faTrashAlt, faCheck } from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {resetComponentStyles} from "../../../store/libraryState/actions";
+import {connect} from "react-redux";
+
 
 class ResetBtn extends Component {
     state = {
@@ -34,8 +37,8 @@ class ResetBtn extends Component {
         // если по кнопке недавно нажимали, то ничего не предпринимать
         if ( this.isActive() ) return null;
         // в ином случае сбросить стили компонента
-        const { resetStyles } = this.props;
-        resetStyles()
+        const { resetComponentStyles, componentName } = this.props;
+        resetComponentStyles(componentName)
 
         // сделать кнопку временно активной (нажатой)
         this.setState({
@@ -55,4 +58,14 @@ class ResetBtn extends Component {
     }
 }
 
-export default ResetBtn;
+const mapStateToProps = (state) => {
+    return {
+        componentName: state.currentComponent.componentName
+    }
+}
+
+const mapDispatchToProps = {
+    resetComponentStyles
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResetBtn);

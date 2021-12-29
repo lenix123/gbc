@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import "./Waves.css"
 import StyleReader from "../../../../utils/StyleReader";
+import {connect} from "react-redux";
 
 class Waves extends Component {
     render() {
         const {componentsState} = this.props;
         const componentStyle = componentsState && componentsState["Waves"];
-        let text = this.props.children || "Scooby Doo";
+        let text = componentStyle.text || "Scooby Doo";
         let styleReader = new StyleReader(componentStyle);
 
         return (
@@ -29,4 +30,10 @@ class Waves extends Component {
     }
 }
 
-export default Waves;
+const mapStateToProps = (state) => {
+    return {
+        componentsState: state.libraryState
+    }
+}
+
+export default connect(mapStateToProps)(Waves);

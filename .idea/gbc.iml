@@ -12,5 +12,6 @@
     <orderEntry type="module" module-name="cities" />
     <orderEntry type="module" module-name="diary_site" />
     <orderEntry type="module" module-name="lil_django" />
+    <orderEntry type="module" module-name="GBCProject" />
   </component>
 </module>
