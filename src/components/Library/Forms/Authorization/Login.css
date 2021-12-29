@@ -38,9 +38,3 @@
     font-size: 16px;
     color: #909090;
 }
-
-/*.login__input:not(:placeholder-shown) ~ .login__label {*/
-/*    top: -55%;*/
-/*    font-size: 16px;*/
-/*    color: #909090;*/
-/*}*/

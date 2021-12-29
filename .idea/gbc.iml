@@ -10,5 +10,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="test-shop" />
     <orderEntry type="module" module-name="cities" />
+    <orderEntry type="module" module-name="diary_site" />
+    <orderEntry type="module" module-name="lil_django" />
   </component>
 </module>

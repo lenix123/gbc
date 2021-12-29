@@ -3,7 +3,8 @@ import "./BankCard.css";
 import StyleReader from "../../../../utils/StyleReader";
 import Data from "../Data/Data";
 import CardInfo from "card-info";
-
+import * as nameLogos from "./BanksHub";
+import * as nameBrands from "./BrandsHub";
 
 class BankCard extends Component {
     state = {
@@ -12,7 +13,8 @@ class BankCard extends Component {
         brandLogo: '',
         background: '',
         textColor: '',
-        codeName: 'CVV'
+        codeName: 'CVV',
+        nameLogo: '',
     }
 
     render() {
@@ -22,55 +24,68 @@ class BankCard extends Component {
         const defaultText = this.props.children || 'Lenix Bank'
         let CardStyle = styleReader.style;
         CardStyle['background'] = this.state.background || CardStyle['background'];
+        CardStyle['color'] = this.state.textColor || CardStyle['color'];
+
+        let BankLogo;
+        if (this.state.bankName === '') {
+            BankLogo = <p>{this.state.bankName || defaultText}</p>;
+        } else if (this.state.nameLogo !== '') {
+
+            if (nameLogos[this.state.nameLogo] !== undefined) {
+                BankLogo =  <img className="bankCard__img" src={nameLogos[this.state.nameLogo]} alt={this.state.bankName} />;
+            } else {
+                BankLogo = <p className="bankCard__bankName">{this.state.bankName}</p>;
+            }
+
+        }
+
+        let BrandLogo;
+        let pathToLogo = this.state.brandLogo;
+        if (pathToLogo !== '') {
+            let fileName = pathToLogo.split("/");
+            fileName = fileName[fileName.length-1];
+            let brandName = fileName.replaceAll('-', '_').replaceAll('.svg', '');
+            BrandLogo = <img src={nameBrands[brandName]} alt="" />;
+        }
 
         return (
             <div className={"bankCard"} style={CardStyle}>
-                <h2 className={"bankCard__bankName"} style={{'color': this.state.textColor}}>{this.state.bankName || defaultText}</h2>
-                <Data componentsState={componentsState}
-                      className={"bankCard__number"}
-                      id={"card-number"}
-                      onChange={this.handleChange}
-                      formMask={"9999-9999-9999-9999"}
-                      formPlaceholder={"Card number"} />
-                <div className={"bankCard__lower"}>
-                    <div className={"bankCard__period"}>
-                        <Data componentsState={componentsState}
-                              className={"bankCard__month"}
-                              formMask={"99"}
-                              formPlaceholder={"MM"}/>
-                        <p className={"bankCard__splitter"}>/</p>
-                        <Data componentsState={componentsState}
-                              className={"bankCard__year"}
-                              formMask={"99"}
-                              formPlaceholder={"YY"}/>
-                    </div>
+                <div className="bankCard__bankLogo">
+                    {BankLogo}
+                </div>
+                <div className="bankCard__number">
                     <Data componentsState={componentsState}
-                          className={"bankCard__code"}
-                          formMask={"999"}
-                          formPlaceholder={this.state.codeName}/>
+                          className={"bankCard__number__form"}
+                          id={"card-number"}
+                          onChange={this.handleChange}
+                          formMask={"9999-9999-9999-9999"}
+                          formPlaceholder={"Card number"} />
+                </div>
+                <div className={"bankCard__lower"}>
+                    <div className="bankCard__lower__forms">
+                        <div className={"bankCard__period"}>
+                            <Data componentsState={componentsState}
+                                  className={"bankCard__month"}
+                                  formMask={"99"}
+                                  formPlaceholder={"MM"}/>
+                            <p className={"bankCard__splitter"}>/</p>
+                            <Data componentsState={componentsState}
+                                  className={"bankCard__year"}
+                                  formMask={"99"}
+                                  formPlaceholder={"YY"}/>
+                        </div>
+                        <Data componentsState={componentsState}
+                              className={"bankCard__code"}
+                              formMask={"999"}
+                              formPlaceholder={this.state.codeName}/>
+                    </div>
+                    <div className="bankCard__brandLogo">
+                        {BrandLogo}
+                    </div>
                 </div>
             </div>
         );
     }
-
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     if (prevProps !== this.props) {
-    //         const {componentsState} = this.props;
-    //         const componentStyle = componentsState && componentsState["BankCard"];
-    //
-    //         const bankName = componentStyle["text"] || "Lenix Bank";
-    //         const background = componentStyle["bg"] || "#EFF2EE";
-    //         const textColor = componentStyle["cl"] || "#222222";
-    //
-    //         this.setState(
-    //             {
-    //                 bankName: bankName,
-    //                 background: background,
-    //                 textColor: textColor,
-    //             }
-    //         )
-    //     }
-    // }
 
     handleChange = () => {
         let cardNum = document.querySelector("#card-number").value.trim();
@@ -81,8 +96,6 @@ class BankCard extends Component {
                 brandsLogosPath: '/node_modules/card-info/dist/brands-logos/'
             });
 
-            console.log(cardInfo)
-
             if (cardInfo.bankName !== null) {
                 this.setState({
                     bankName: cardInfo.bankName,
@@ -91,6 +104,7 @@ class BankCard extends Component {
                     background: cardInfo.backgroundGradient,
                     textColor: cardInfo.textColor,
                     codeName: cardInfo.codeName,
+                    nameLogo: cardInfo.bankAlias.replace('ru-', '').replace('24', ''),
                 });
             }
         } else {
@@ -100,7 +114,9 @@ class BankCard extends Component {
                 brandLogo: '',
                 background: '',
                 textColor: '',
-                codeName: 'CVV'})
+                codeName: 'CVV',
+                nameLogo: '',
+            })
         }
     }
 }

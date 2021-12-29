@@ -94,7 +94,7 @@ function BankCardText(componentsState) {
     const CardNumber = CardForm(componentsState["Data"], "Card Number", "cardNumber");
     const Month = CardForm(componentsState["Data"], "MM", "period");
     const Year = CardForm(componentsState["Data"], "YY", "period");
-    const CVV = CardForm(componentsState["Data"], "CVV", "cvv");
+    const CVV = CardForm(componentsState["Data"], "CVV", "code");
 
     return `<BankCard${propsText}>${componentText}\n\t${CardNumber}\n\t${Month}\n\t${Year}\n\t${CVV}\n</BankCard>`
 }
@@ -109,6 +109,8 @@ function CardForm(componentStyle, placeholder, formType) {
         propsText = ' mask="9999-9999-9999-9999"' + propsText;
     } else if (formType === "period") {
         propsText = ' mask="99"' + propsText;
+    } else if (formType === "code") {
+        propsText = ' mask="999"';
     }
 
     return `<Data${propsText}>${placeholder}</Data>`
