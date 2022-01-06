@@ -55,8 +55,7 @@ class BankCard extends Component {
                     {BankLogo}
                 </div>
                 <div className="bankCard__number">
-                    <Data componentsState={componentsState}
-                          className={"bankCard__number__form"}
+                    <Data className={"bankCard__number__form"}
                           id={"card-number"}
                           onChange={this.handleChange}
                           formMask={"9999-9999-9999-9999"}
@@ -65,18 +64,15 @@ class BankCard extends Component {
                 <div className={"bankCard__lower"}>
                     <div className="bankCard__lower__forms">
                         <div className={"bankCard__period"}>
-                            <Data componentsState={componentsState}
-                                  className={"bankCard__month"}
+                            <Data className={"bankCard__month"}
                                   formMask={"99"}
                                   formPlaceholder={"MM"}/>
                             <p className={"bankCard__splitter"}>/</p>
-                            <Data componentsState={componentsState}
-                                  className={"bankCard__year"}
+                            <Data className={"bankCard__year"}
                                   formMask={"99"}
                                   formPlaceholder={"YY"}/>
                         </div>
-                        <Data componentsState={componentsState}
-                              className={"bankCard__code"}
+                        <Data className={"bankCard__code"}
                               formMask={"999"}
                               formPlaceholder={this.state.codeName}/>
                     </div>
